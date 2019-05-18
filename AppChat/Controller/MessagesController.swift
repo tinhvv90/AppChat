@@ -15,9 +15,6 @@ class MessagesController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(handleLogout))
-        
         checkIfUserIsLoggedIn()
     }
     
@@ -36,6 +33,18 @@ class MessagesController: UITableViewController {
         }
     }
 
+    @IBAction func logoutAction(_ sender: UIBarButtonItem) {
+        handleLogout()
+    }
+    
+    @IBAction func newMessageAction(_ sender: UIBarButtonItem) {
+        let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
+        let newMessageController = storyboard.instantiateViewController(withIdentifier: "NewMessageController") as! NewMessageController
+        let nav = UINavigationController.init(rootViewController: newMessageController)
+        present(nav, animated: true, completion: nil)
+    }
+    
+    
     @objc func handleLogout() {
         do {
             try Auth.auth().signOut()

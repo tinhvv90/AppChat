@@ -33,7 +33,18 @@
                             <outlet property="delegate" destination="eq3-YW-Q8B" id="HVh-qe-bQW"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="rjx-al-yj5"/>
+                    <navigationItem key="navigationItem" id="rjx-al-yj5">
+                        <barButtonItem key="leftBarButtonItem" title="Logout" id="nkq-Ol-3TY">
+                            <connections>
+                                <action selector="logoutAction:" destination="eq3-YW-Q8B" id="Ezf-8b-Las"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" image="icon_new_message" id="if5-Zw-uOB">
+                            <connections>
+                                <action selector="newMessageAction:" destination="eq3-YW-Q8B" id="ogN-zo-cN8"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UN1-EJ-410" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -178,7 +189,35 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QbX-XO-YJO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2605.5999999999999" y="-313.49325337331339"/>
+            <point key="canvasLocation" x="2588" y="-321"/>
+        </scene>
+        <!--New Message Controller-->
+        <scene sceneID="og7-cg-God">
+            <objects>
+                <tableViewController storyboardIdentifier="NewMessageController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="od6-lG-QwP" customClass="NewMessageController" customModule="AppChat" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="5JH-q4-v82">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="9by-pf-R42">
+                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="9by-pf-R42" id="2nV-ZL-ECq">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="od6-lG-QwP" id="fKX-y7-XAG"/>
+                            <outlet property="delegate" destination="od6-lG-QwP" id="k1t-8Y-5Vm"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7xr-WX-1L1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3330" y="-321"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="gFA-KX-gsq">
@@ -201,5 +240,6 @@
     </scenes>
     <resources>
         <image name="avatar" width="443" height="443"/>
+        <image name="icon_new_message" width="25" height="25"/>
     </resources>
 </document>
