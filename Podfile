@@ -6,5 +6,5 @@ target 'AppChat' do
   use_frameworks!
   pod 'Firebase/Core'
   pod 'Firebase/Analytics'
-
+  pod 'Firebase/Database'
 end
