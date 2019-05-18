@@ -11,15 +11,26 @@ import FirebaseDatabase
 
 class NewMessageController: UITableViewController {
 
+    var users = [User]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.title = "New Messages"
         navigationItem.leftBarButtonItem = UIBarButtonItem.init(title: "Cancel", style: .plain, target: self, action: #selector(handleCancel))
         fetchUser()
     }
 
     func fetchUser() {
         Database.database().reference().child("users").observe(.childAdded) { (snapshot) in
-            print(snapshot)
+            if let dic = snapshot.value as? [String: AnyObject] {
+                let user = User()
+                user.email = dic["email"] as? String
+                user.name = dic["name"] as? String
+                self.users.append(user)
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            }
         }
     }
     
@@ -27,4 +38,15 @@ class NewMessageController: UITableViewController {
         self.dismiss(animated: true, completion: nil)
     }
 
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return users.count
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "UserTableViewCell", for: indexPath) as! UserTableViewCell
+        let user = users[indexPath.row]
+        cell.textLabel?.text = user.name
+        cell.detailTextLabel?.text = user.email
+        return cell
+    }
 }

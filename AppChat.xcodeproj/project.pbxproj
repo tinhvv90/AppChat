@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -16,6 +16,8 @@
 		5C3A714A228F9567005B3BCA /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C3A7149228F9567005B3BCA /* Color.swift */; };
 		5C3A714C228FA51D005B3BCA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5C3A714B228FA51D005B3BCA /* GoogleService-Info.plist */; };
 		5C3A714E228FC1E1005B3BCA /* NewMessageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C3A714D228FC1E1005B3BCA /* NewMessageController.swift */; };
+		DCBFDDC2228FE83E006FBF70 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCBFDDC1228FE83E006FBF70 /* User.swift */; };
+		DCBFDDC5228FEB8A006FBF70 /* UserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCBFDDC4228FEB8A006FBF70 /* UserTableViewCell.swift */; };
 		F5C7540F8591AE8718F07DB8 /* Pods_AppChat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4ABE9496D8E5F68DB99D33CF /* Pods_AppChat.framework */; };
 /* End PBXBuildFile section */
 
@@ -34,6 +36,8 @@
 		5C3A714B228FA51D005B3BCA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		5C3A714D228FC1E1005B3BCA /* NewMessageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessageController.swift; sourceTree = "<group>"; };
 		DA982B33F1458E326953A457 /* Pods-AppChat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppChat.debug.xcconfig"; path = "Target Support Files/Pods-AppChat/Pods-AppChat.debug.xcconfig"; sourceTree = "<group>"; };
+		DCBFDDC1228FE83E006FBF70 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		DCBFDDC4228FEB8A006FBF70 /* UserTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,6 +82,7 @@
 		5C3A7131228F8FE8005B3BCA /* AppChat */ = {
 			isa = PBXGroup;
 			children = (
+				DCBFDDC0228FE831006FBF70 /* Model */,
 				5C3A7148228F9547005B3BCA /* Extension */,
 				5C3A7145228F9361005B3BCA /* Controller */,
 				5C3A7132228F8FE8005B3BCA /* AppDelegate.swift */,
@@ -93,6 +98,7 @@
 		5C3A7145228F9361005B3BCA /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				DCBFDDC3228FEB6F006FBF70 /* Cell */,
 				5C3A7146228F9387005B3BCA /* LoginController.swift */,
 				5C3A7134228F8FE8005B3BCA /* MessagesController.swift */,
 				5C3A714D228FC1E1005B3BCA /* NewMessageController.swift */,
@@ -114,6 +120,22 @@
 				4ABE9496D8E5F68DB99D33CF /* Pods_AppChat.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		DCBFDDC0228FE831006FBF70 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				DCBFDDC1228FE83E006FBF70 /* User.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		DCBFDDC3228FEB6F006FBF70 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				DCBFDDC4228FEB8A006FBF70 /* UserTableViewCell.swift */,
+			);
+			path = Cell;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -234,6 +256,8 @@
 			files = (
 				5C3A7135228F8FE8005B3BCA /* MessagesController.swift in Sources */,
 				5C3A714E228FC1E1005B3BCA /* NewMessageController.swift in Sources */,
+				DCBFDDC5228FEB8A006FBF70 /* UserTableViewCell.swift in Sources */,
+				DCBFDDC2228FE83E006FBF70 /* User.swift in Sources */,
 				5C3A714A228F9567005B3BCA /* Color.swift in Sources */,
 				5C3A7147228F9387005B3BCA /* LoginController.swift in Sources */,
 				5C3A7133228F8FE8005B3BCA /* AppDelegate.swift in Sources */,

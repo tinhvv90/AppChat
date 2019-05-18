@@ -67,6 +67,9 @@ class LoginController: UIViewController {
             }
             if let user = authResult?.user {
                 // successfully authenticated user
+                
+//                let storageRef = 
+                
                 let ref = Database.database().reference(fromURL: "https://appchat-7b4be.firebaseio.com/")
                 let usersReference = ref.child("users").child(user.uid)
                 let values = ["name": name, "email": email]
@@ -99,5 +102,37 @@ class LoginController: UIViewController {
         nameSeparatorView.isHidden = loginRegisterSegmentedControl.selectedSegmentIndex == 0 ? true : false
     }
     
+    @IBAction func handleSelectProfileImageView(_ sender: UITapGestureRecognizer) {
+        let picker = UIImagePickerController()
+        picker.delegate = self
+        picker.allowsEditing = true
+        present(picker, animated: true, completion: nil)
+    }
+    
 }
 
+extension LoginController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+
+        var selectedImageFromPicker: UIImage?
+        
+        if let editedImage = info[.editedImage] as? UIImage {
+            selectedImageFromPicker = editedImage
+            print(editedImage.size)
+        } else if let originalImage = info[.originalImage] as? UIImage {
+            selectedImageFromPicker = originalImage
+            print(originalImage.size)
+        }
+        
+        if let selectedImage = selectedImageFromPicker {
+            profileImageView.image = selectedImage
+        }
+        
+        dismiss(animated: true, completion: nil)
+    }
+}
