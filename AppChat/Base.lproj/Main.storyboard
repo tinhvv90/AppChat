@@ -10,10 +10,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Messages Controller-->
         <scene sceneID="FbI-6h-5sf">
             <objects>
-                <tableViewController id="eq3-YW-Q8B" customClass="ViewController" customModule="AppChat" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="eq3-YW-Q8B" customClass="MessagesController" customModule="AppChat" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="c7S-Tj-Neh">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -69,7 +69,7 @@
                                                 <rect key="frame" x="0.0" y="100" width="343" height="50"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits" textContentType="password"/>
+                                                <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="password"/>
                                             </textField>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -116,15 +116,29 @@
                                     <constraint firstAttribute="height" constant="50" id="GNj-El-9Z8"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
-                                <state key="normal" title="Register">
+                                <state key="normal" title="Login">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
-                                    <action selector="handleRegister:" destination="QND-fb-eU0" eventType="touchUpInside" id="7UV-BV-9Nq"/>
+                                    <action selector="handleLoginRegister:" destination="QND-fb-eU0" eventType="touchUpInside" id="5gG-pS-rYM"/>
                                 </connections>
                             </button>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="eLN-J5-w3l">
+                                <rect key="frame" x="8" y="210.5" width="359" height="37"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="36" id="85j-PM-hOC"/>
+                                </constraints>
+                                <segments>
+                                    <segment title="Login"/>
+                                    <segment title="Register"/>
+                                </segments>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <action selector="handleLoginRegisterChange:" destination="QND-fb-eU0" eventType="valueChanged" id="7YO-Eq-duC"/>
+                                </connections>
+                            </segmentedControl>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="avatar" translatesAutoresizingMaskIntoConstraints="NO" id="y7Q-kn-UfX">
-                                <rect key="frame" x="112.5" y="68.5" width="150" height="150"/>
+                                <rect key="frame" x="112.5" y="40.5" width="150" height="150"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="150" id="FA0-bX-TDd"/>
                                     <constraint firstAttribute="height" constant="150" id="FO4-9F-lMG"/>
@@ -134,12 +148,16 @@
                         <color key="backgroundColor" red="0.23921568627450979" green="0.35686274509803922" blue="0.59215686274509804" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="D8N-I4-Sse" firstAttribute="centerY" secondItem="daI-AE-mOC" secondAttribute="centerY" id="HSt-q2-9g0"/>
-                            <constraint firstItem="D8N-I4-Sse" firstAttribute="top" secondItem="y7Q-kn-UfX" secondAttribute="bottom" constant="40" id="P2j-fm-p7e"/>
+                            <constraint firstItem="eLN-J5-w3l" firstAttribute="top" secondItem="y7Q-kn-UfX" secondAttribute="bottom" constant="20" id="IHH-0s-q1P"/>
+                            <constraint firstItem="eLN-J5-w3l" firstAttribute="centerX" secondItem="daI-AE-mOC" secondAttribute="centerX" id="On2-9X-aIc"/>
                             <constraint firstItem="qPk-4S-mK6" firstAttribute="trailing" secondItem="D8N-I4-Sse" secondAttribute="trailing" constant="8" id="PVV-zi-bXf"/>
                             <constraint firstItem="DQf-Qh-ohT" firstAttribute="top" secondItem="D8N-I4-Sse" secondAttribute="bottom" constant="20" id="b3o-zb-oA1"/>
                             <constraint firstItem="qPk-4S-mK6" firstAttribute="trailing" secondItem="DQf-Qh-ohT" secondAttribute="trailing" constant="8" id="cpp-pc-7o7"/>
+                            <constraint firstItem="eLN-J5-w3l" firstAttribute="leading" secondItem="qPk-4S-mK6" secondAttribute="leading" constant="8" id="daM-oJ-A0A"/>
                             <constraint firstItem="D8N-I4-Sse" firstAttribute="leading" secondItem="qPk-4S-mK6" secondAttribute="leading" constant="8" id="m5z-6M-36d"/>
                             <constraint firstItem="DQf-Qh-ohT" firstAttribute="leading" secondItem="qPk-4S-mK6" secondAttribute="leading" constant="8" id="rdI-k2-pgj"/>
+                            <constraint firstItem="D8N-I4-Sse" firstAttribute="top" secondItem="eLN-J5-w3l" secondAttribute="bottom" constant="12" id="rgf-kK-8sP"/>
+                            <constraint firstItem="qPk-4S-mK6" firstAttribute="trailing" secondItem="eLN-J5-w3l" secondAttribute="trailing" constant="8" id="vvg-ur-ZXh"/>
                             <constraint firstItem="D8N-I4-Sse" firstAttribute="centerX" secondItem="daI-AE-mOC" secondAttribute="centerX" id="ydQ-NG-sUx"/>
                             <constraint firstItem="y7Q-kn-UfX" firstAttribute="centerX" secondItem="daI-AE-mOC" secondAttribute="centerX" id="zAD-5I-M2P"/>
                         </constraints>
@@ -148,8 +166,10 @@
                     <connections>
                         <outlet property="emailSeparatorView" destination="o8e-nz-aWk" id="pSC-u0-XOp"/>
                         <outlet property="emailTextField" destination="8bK-5l-7wc" id="PHe-42-7CW"/>
+                        <outlet property="heightContainerViewLayout" destination="Qeq-DW-Q9r" id="iZU-fH-wzl"/>
                         <outlet property="inputsContainerView" destination="D8N-I4-Sse" id="0Cg-Mc-uUR"/>
                         <outlet property="loginRegisterButton" destination="DQf-Qh-ohT" id="HQS-2o-vA1"/>
+                        <outlet property="loginRegisterSegmentedControl" destination="eLN-J5-w3l" id="LNZ-Hb-A2u"/>
                         <outlet property="nameSeparatorView" destination="drs-MI-tel" id="ckq-W1-i2c"/>
                         <outlet property="nameTextField" destination="bGH-YQ-n6y" id="KQ4-pH-DM9"/>
                         <outlet property="passwordTextField" destination="aha-EE-gbg" id="69o-iD-BwU"/>

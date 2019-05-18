@@ -8,4 +8,5 @@ target 'AppChat' do
   pod 'Firebase/Analytics'
   pod 'Firebase/Database'
   pod 'Firebase/Auth'
+  pod 'Firebase/Firestore'
 end
