@@ -12,6 +12,8 @@
 		5C3A7138228F8FE8005B3BCA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5C3A7136228F8FE8005B3BCA /* Main.storyboard */; };
 		5C3A713A228F8FE9005B3BCA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5C3A7139228F8FE9005B3BCA /* Assets.xcassets */; };
 		5C3A713D228F8FE9005B3BCA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5C3A713B228F8FE9005B3BCA /* LaunchScreen.storyboard */; };
+		5C3A7147228F9387005B3BCA /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C3A7146228F9387005B3BCA /* LoginController.swift */; };
+		5C3A714A228F9567005B3BCA /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C3A7149228F9567005B3BCA /* Color.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +24,8 @@
 		5C3A7139228F8FE9005B3BCA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5C3A713C228F8FE9005B3BCA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5C3A713E228F8FE9005B3BCA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5C3A7146228F9387005B3BCA /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
+		5C3A7149228F9567005B3BCA /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +58,8 @@
 		5C3A7131228F8FE8005B3BCA /* AppChat */ = {
 			isa = PBXGroup;
 			children = (
+				5C3A7148228F9547005B3BCA /* Extension */,
+				5C3A7145228F9361005B3BCA /* Controller */,
 				5C3A7132228F8FE8005B3BCA /* AppDelegate.swift */,
 				5C3A7134228F8FE8005B3BCA /* ViewController.swift */,
 				5C3A7136228F8FE8005B3BCA /* Main.storyboard */,
@@ -62,6 +68,22 @@
 				5C3A713E228F8FE9005B3BCA /* Info.plist */,
 			);
 			path = AppChat;
+			sourceTree = "<group>";
+		};
+		5C3A7145228F9361005B3BCA /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				5C3A7146228F9387005B3BCA /* LoginController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		5C3A7148228F9547005B3BCA /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				5C3A7149228F9567005B3BCA /* Color.swift */,
+			);
+			path = Extension;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -136,6 +158,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				5C3A7135228F8FE8005B3BCA /* ViewController.swift in Sources */,
+				5C3A714A228F9567005B3BCA /* Color.swift in Sources */,
+				5C3A7147228F9387005B3BCA /* LoginController.swift in Sources */,
 				5C3A7133228F8FE8005B3BCA /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -284,13 +308,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = AppChat/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.simson.AppChat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -301,13 +326,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = AppChat/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.simson.AppChat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
