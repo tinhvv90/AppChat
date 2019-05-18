@@ -18,6 +18,7 @@
 		5C3A714E228FC1E1005B3BCA /* NewMessageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C3A714D228FC1E1005B3BCA /* NewMessageController.swift */; };
 		DCBFDDC2228FE83E006FBF70 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCBFDDC1228FE83E006FBF70 /* User.swift */; };
 		DCBFDDC5228FEB8A006FBF70 /* UserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCBFDDC4228FEB8A006FBF70 /* UserTableViewCell.swift */; };
+		DCBFDDC822900CEF006FBF70 /* Extension+UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCBFDDC722900CEF006FBF70 /* Extension+UIImage.swift */; };
 		F5C7540F8591AE8718F07DB8 /* Pods_AppChat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4ABE9496D8E5F68DB99D33CF /* Pods_AppChat.framework */; };
 /* End PBXBuildFile section */
 
@@ -38,6 +39,7 @@
 		DA982B33F1458E326953A457 /* Pods-AppChat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppChat.debug.xcconfig"; path = "Target Support Files/Pods-AppChat/Pods-AppChat.debug.xcconfig"; sourceTree = "<group>"; };
 		DCBFDDC1228FE83E006FBF70 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		DCBFDDC4228FEB8A006FBF70 /* UserTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTableViewCell.swift; sourceTree = "<group>"; };
+		DCBFDDC722900CEF006FBF70 /* Extension+UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIImage.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,8 +84,8 @@
 		5C3A7131228F8FE8005B3BCA /* AppChat */ = {
 			isa = PBXGroup;
 			children = (
+				DCBFDDC622900CAD006FBF70 /* Helpers */,
 				DCBFDDC0228FE831006FBF70 /* Model */,
-				5C3A7148228F9547005B3BCA /* Extension */,
 				5C3A7145228F9361005B3BCA /* Controller */,
 				5C3A7132228F8FE8005B3BCA /* AppDelegate.swift */,
 				5C3A7136228F8FE8005B3BCA /* Main.storyboard */,
@@ -110,6 +112,7 @@
 			isa = PBXGroup;
 			children = (
 				5C3A7149228F9567005B3BCA /* Color.swift */,
+				DCBFDDC722900CEF006FBF70 /* Extension+UIImage.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -136,6 +139,14 @@
 				DCBFDDC4228FEB8A006FBF70 /* UserTableViewCell.swift */,
 			);
 			path = Cell;
+			sourceTree = "<group>";
+		};
+		DCBFDDC622900CAD006FBF70 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				5C3A7148228F9547005B3BCA /* Extension */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -257,6 +268,7 @@
 				5C3A7135228F8FE8005B3BCA /* MessagesController.swift in Sources */,
 				5C3A714E228FC1E1005B3BCA /* NewMessageController.swift in Sources */,
 				DCBFDDC5228FEB8A006FBF70 /* UserTableViewCell.swift in Sources */,
+				DCBFDDC822900CEF006FBF70 /* Extension+UIImage.swift in Sources */,
 				DCBFDDC2228FE83E006FBF70 /* User.swift in Sources */,
 				5C3A714A228F9567005B3BCA /* Color.swift in Sources */,
 				5C3A7147228F9387005B3BCA /* LoginController.swift in Sources */,

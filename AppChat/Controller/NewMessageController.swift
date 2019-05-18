@@ -16,7 +16,9 @@ class NewMessageController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "New Messages"
+        
         navigationItem.leftBarButtonItem = UIBarButtonItem.init(title: "Cancel", style: .plain, target: self, action: #selector(handleCancel))
+        tableView.register(UserTableViewCell.self, forCellReuseIdentifier: "UserTableViewCell")
         fetchUser()
     }
 
@@ -26,6 +28,7 @@ class NewMessageController: UITableViewController {
                 let user = User()
                 user.email = dic["email"] as? String
                 user.name = dic["name"] as? String
+                user.profileImageUrl = dic["profileImageUrl"] as? String
                 self.users.append(user)
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
@@ -47,6 +50,14 @@ class NewMessageController: UITableViewController {
         let user = users[indexPath.row]
         cell.textLabel?.text = user.name
         cell.detailTextLabel?.text = user.email
+        
+        if let profileImageUrl = user.profileImageUrl {
+            cell.profileImageView.loadImageUsingCacheWithUrlString(urlString: profileImageUrl)
+        }
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 72
     }
 }

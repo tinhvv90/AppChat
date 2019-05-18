@@ -9,6 +9,7 @@
 import UIKit
 import Firebase
 import FirebaseAuth
+import FirebaseDatabase
 
 class LoginController: UIViewController {
 
@@ -29,6 +30,10 @@ class LoginController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         loginRegisterSegmentedControl.selectedSegmentIndex = 1
+        let title = loginRegisterSegmentedControl.titleForSegment(at: loginRegisterSegmentedControl.selectedSegmentIndex)
+        loginRegisterButton.setTitle(title, for: .normal)
+        nameTextField.isHidden = loginRegisterSegmentedControl.selectedSegmentIndex == 0 ? true : false
+        nameSeparatorView.isHidden = loginRegisterSegmentedControl.selectedSegmentIndex == 0 ? true : false
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -62,29 +67,48 @@ class LoginController: UIViewController {
         
         Auth.auth().createUser(withEmail: email, password: password) { (authResult, error) in
             if error != nil {
-                print(error?.localizedDescription)
                 return
             }
-            if let user = authResult?.user {
-                // successfully authenticated user
-                
-//                let storageRef = 
-                
-                let ref = Database.database().reference(fromURL: "https://appchat-7b4be.firebaseio.com/")
-                let usersReference = ref.child("users").child(user.uid)
-                let values = ["name": name, "email": email]
-                usersReference.updateChildValues(values, withCompletionBlock: { (err, ref) in
-                    if err != nil {
-                        print(err)
-                        return
-                    }
-                    self.dismiss(animated: true, completion: nil)
-                })
-            } else {
-                print("fail")
+            
+            guard let user = authResult?.user else {
+                print("error:   ---------------- ")
+                return
+            }
+            
+            // successfully authenticated user
+            let imageName = UUID().uuidString
+            let storageRef = Storage.storage().reference().child("profile_images").child("\(imageName).png")
+            
+            if let imageView = self.profileImageView.image {
+                if let data = imageView.pngData() {
+                    storageRef.putData(data, metadata: nil, completion: { (metadata, error) in
+                        if error != nil {
+                            return
+                        }
+                        storageRef.downloadURL(completion: { (url, error) in
+                            guard let url = url?.absoluteString else {
+                                return
+                            }
+                            let values = ["name": name, "email": email, "profileImageUrl": url]
+                            self.registerUserIntoDatabaseWithUID(uid: user.uid, values: values as [String : AnyObject] )
+                        })
+                    })
+                }
             }
         }
     }
+    
+    private func registerUserIntoDatabaseWithUID(uid: String, values: [String: AnyObject]) {
+        let ref = Database.database().reference(fromURL: "https://appchat-7b4be.firebaseio.com/")
+        let usersReference = ref.child("users").child(uid)
+        usersReference.updateChildValues(values, withCompletionBlock: { (err, ref) in
+            if err != nil {
+                return
+            }
+            self.dismiss(animated: true, completion: nil)
+        })
+    }
+    
     @IBAction func handleLoginRegister(_ sender: UIButton) {
         if loginRegisterSegmentedControl.selectedSegmentIndex == 0 {
             handleLogin()
