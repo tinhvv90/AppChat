@@ -119,6 +119,9 @@
                                 <state key="normal" title="Register">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
+                                <connections>
+                                    <action selector="handleRegister:" destination="QND-fb-eU0" eventType="touchUpInside" id="7UV-BV-9Nq"/>
+                                </connections>
                             </button>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="avatar" translatesAutoresizingMaskIntoConstraints="NO" id="y7Q-kn-UfX">
                                 <rect key="frame" x="112.5" y="68.5" width="150" height="150"/>

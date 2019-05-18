@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseAuth
 
 class LoginController: UIViewController {
 
@@ -31,5 +33,9 @@ class LoginController: UIViewController {
         return .lightContent
     }
 
+    @IBAction func handleRegister(_ sender: UIButton) {
+        
+        print(123)
+    }
 }
 
