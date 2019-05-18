@@ -27,6 +27,9 @@ class LoginController: UIViewController {
     @IBOutlet weak var loginRegisterSegmentedControl: UISegmentedControl!
     
     @IBOutlet weak var heightContainerViewLayout: NSLayoutConstraint!
+    
+    var messagesController: MessagesController?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         loginRegisterSegmentedControl.selectedSegmentIndex = 1
@@ -53,6 +56,8 @@ class LoginController: UIViewController {
                 return
             }
             
+            self.messagesController?.fetchUserAndSetupNavTitle()
+            
             self.dismiss(animated: true, completion: nil)
         }
     }
@@ -77,10 +82,10 @@ class LoginController: UIViewController {
             
             // successfully authenticated user
             let imageName = UUID().uuidString
-            let storageRef = Storage.storage().reference().child("profile_images").child("\(imageName).png")
+            let storageRef = Storage.storage().reference().child("profile_images").child("\(imageName).jpg")
             
             if let imageView = self.profileImageView.image {
-                if let data = imageView.pngData() {
+                if let data = imageView.jpegData(compressionQuality: 0.1) {
                     storageRef.putData(data, metadata: nil, completion: { (metadata, error) in
                         if error != nil {
                             return
@@ -105,6 +110,14 @@ class LoginController: UIViewController {
             if err != nil {
                 return
             }
+            
+//            self.messagesController?.fetchUserAndSetupNavTitle()
+            let user = User()
+            user.name = values["name"] as? String
+            user.email = values["email"] as? String
+            user.profileImageUrl = values["profileImageUrl"] as? String
+            self.messagesController?.setupNavBarWithUser(user: user)
+            
             self.dismiss(animated: true, completion: nil)
         })
     }
