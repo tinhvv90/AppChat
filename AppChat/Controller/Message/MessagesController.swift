@@ -46,22 +46,23 @@ class MessagesController: UITableViewController {
     }
 
     func setupNavBarWithUser(user: User) {
+        
         let titleView = UIView()
         titleView.frame = CGRect(x: 0, y: 0, width: 100, height: 40)
-        titleView.backgroundColor = UIColor.red
         
         let containerView = UIView()
         containerView.translatesAutoresizingMaskIntoConstraints = false
+        
         titleView.addSubview(containerView)
         
         let profileImageView = UIImageView()
         profileImageView.translatesAutoresizingMaskIntoConstraints = false
-        profileImageView.contentMode = .scaleAspectFit
+        profileImageView.contentMode = .scaleAspectFill
         profileImageView.layer.cornerRadius = 20
         profileImageView.clipsToBounds = true
         
         if let profileImageUrl = user.profileImageUrl {
-            profileImageView.loadImageUsingCacheWithUrlString(urlString: profileImageUrl)
+                profileImageView.loadImageUsingCacheWithUrlString(urlString: profileImageUrl)
         }
         
         containerView.addSubview(profileImageView)
@@ -74,19 +75,32 @@ class MessagesController: UITableViewController {
         let nameLabel = UILabel()
         nameLabel.text = user.name
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
-        nameLabel.textAlignment = .left
+        
         containerView.addSubview(nameLabel)
         
         nameLabel.leftAnchor.constraint(equalTo: profileImageView.rightAnchor, constant: 8).isActive = true
         nameLabel.centerYAnchor.constraint(equalTo: profileImageView.centerYAnchor).isActive = true
         nameLabel.rightAnchor.constraint(equalTo: containerView.rightAnchor).isActive = true
         nameLabel.heightAnchor.constraint(equalTo: profileImageView.heightAnchor).isActive = true
-//        nameLabel.widthAnchor.constraint(equalToConstant: 130).isActive = true
+        
+        self.navigationItem.titleView = titleView
         
         containerView.centerXAnchor.constraint(equalTo: titleView.centerXAnchor).isActive = true
         containerView.centerYAnchor.constraint(equalTo: titleView.centerYAnchor).isActive = true
         
-        self.navigationItem.titleView = titleView
+        titleView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showChatController)))
+    }
+    
+    @objc func showChatController() {
+        print(123)
+        
+        let chatVC = ChatlogController()
+        
+        
+//        let storyboard = UIStoryboard.init(name: "Chat", bundle: nil)
+//        let chatVC = storyboard.instantiateViewController(withIdentifier: "ChatlogController") as! ChatlogController
+//
+        self.navigationController?.pushViewController(chatVC, animated: true)
     }
     
     @IBAction func logoutAction(_ sender: UIBarButtonItem) {
