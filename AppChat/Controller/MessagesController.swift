@@ -74,14 +74,14 @@ class MessagesController: UITableViewController {
         let nameLabel = UILabel()
         nameLabel.text = user.name
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
-        
+        nameLabel.textAlignment = .left
         containerView.addSubview(nameLabel)
         
         nameLabel.leftAnchor.constraint(equalTo: profileImageView.rightAnchor, constant: 8).isActive = true
         nameLabel.centerYAnchor.constraint(equalTo: profileImageView.centerYAnchor).isActive = true
         nameLabel.rightAnchor.constraint(equalTo: containerView.rightAnchor).isActive = true
         nameLabel.heightAnchor.constraint(equalTo: profileImageView.heightAnchor).isActive = true
-        nameLabel.widthAnchor.constraint(equalToConstant: 150).isActive = true
+//        nameLabel.widthAnchor.constraint(equalToConstant: 130).isActive = true
         
         containerView.centerXAnchor.constraint(equalTo: titleView.centerXAnchor).isActive = true
         containerView.centerYAnchor.constraint(equalTo: titleView.centerYAnchor).isActive = true

@@ -5,7 +5,7 @@
 ## Build generated
 build/
 DerivedData/
-Various
+
 ## Various settings
 *.pbxuser
 !default.pbxuser
@@ -16,8 +16,6 @@ Various
 *.perspectivev3
 !default.perspectivev3
 xcuserdata/
-
-AppIcon.appiconset/
 
 ## Other
 *.moved-aside
@@ -45,14 +43,14 @@ playground.xcworkspace
 # you should judge for yourself, the pros and cons are mentioned at:
 # https://guides.cocoapods.org/using/using-cocoapods.html#should-i-check-the-pods-directory-into-source-control
 #
-Pods/
+Pods
 
 # Carthage
 #
 # Add this line if you want to avoid checking in source code from Carthage dependencies.
-Carthage/Checkouts
+# Carthage/Checkouts
 
-Carthage/Build
+Carthage
 
 # fastlane
 #
@@ -65,12 +63,5 @@ fastlane/report.xml
 fastlane/Preview.html
 fastlane/screenshots
 fastlane/test_output
-
-# AppCode Jetbrains
-.idea
-
-# Auto generate files
-Firebase/GoogleService-Info.plist
-VinID/Resources/Icon.xcassets/AppIcon.appiconset/Contents.json
-container
-*.xcworkspacedata
+fastlane/README.md
+.bundle
