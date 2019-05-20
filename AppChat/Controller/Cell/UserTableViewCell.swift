@@ -13,18 +13,7 @@ class UserTableViewCell: UITableViewCell {
 
     var message: Message? {
         didSet {
-            if let toId = message?.toId {
-                let ref = Database.database().reference().child("users").child(toId)
-                ref.observeSingleEvent(of: .value, with: { (snapshot) in
-                    if let dic = snapshot.value as? [String: AnyObject] {
-                        self.textLabel?.text = dic["name"] as? String
-                        if let profileImageUrl = dic["profileImageUrl"] as? String {
-                            self.profileImageView.loadImageUsingCacheWithUrlString(urlString: profileImageUrl)
-                        }
-                    }
-                }, withCancel: nil)
-            }
-            
+            setupNameAndProfileImage()
             detailTextLabel?.text = message?.text
             
             if let seconds = message?.timestamp?.doubleValue {
@@ -34,6 +23,21 @@ class UserTableViewCell: UITableViewCell {
                 dateFormater.dateFormat = "hh:mm:ss a"
                 timeLabel.text = dateFormater.string(from: timestampdate)
             }
+        }
+    }
+    
+    private func setupNameAndProfileImage() {
+
+        if let id = message?.chatPartnerId() {
+            let ref = Database.database().reference().child("users").child(id)
+            ref.observeSingleEvent(of: .value, with: { (snapshot) in
+                if let dic = snapshot.value as? [String: AnyObject] {
+                    self.textLabel?.text = dic["name"] as? String
+                    if let profileImageUrl = dic["profileImageUrl"] as? String {
+                        self.profileImageView.loadImageUsingCacheWithUrlString(urlString: profileImageUrl)
+                    }
+                }
+            }, withCancel: nil)
         }
     }
     

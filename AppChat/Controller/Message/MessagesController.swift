@@ -20,7 +20,41 @@ class MessagesController: UITableViewController {
         super.viewDidLoad()
         checkIfUserIsLoggedIn()
         tableView.register(UserTableViewCell.self, forCellReuseIdentifier: "UserTableViewCell")
-        observeMessages()
+//        observeMessages()
+    }
+    
+    func observeUserMessages() {
+        guard let uid = Auth.auth().currentUser?.uid else {
+            return
+        }
+        
+        let ref = Database.database().reference().child("user-messages").child(uid)
+        ref.observe(.childAdded, with: { (snapshot) in
+            print(snapshot)
+            
+            let messageId = snapshot.key
+            let messageReference = Database.database().reference().child("messages").child(messageId)
+            messageReference.observeSingleEvent(of: .value, with: { (snapshot) in
+                print(snapshot)
+                if let dic = snapshot.value as? [String: AnyObject] {
+                    let message = Message()
+                    message.fromId = dic["fromId"] as? String
+                    message.text = dic["text"] as? String
+                    message.toId = dic["toId"] as? String
+                    message.timestamp = dic["timestamp"] as? NSNumber
+                    
+                    if let toId = message.toId {
+                        self.messagesDictionary[toId] = message
+                        self.messages = Array(self.messagesDictionary.values)
+                        self.messages = self.messages.sorted(by: { $0.timestamp?.intValue ?? 0 < $1.timestamp?.intValue ?? 0 })
+                    }
+                    
+                    DispatchQueue.main.async {
+                        self.tableView.reloadData()
+                    }
+                }
+            }, withCancel: nil)
+        }, withCancel: nil)
     }
     
     func observeMessages() {
@@ -75,6 +109,12 @@ class MessagesController: UITableViewController {
     }
 
     func setupNavBarWithUser(user: User) {
+        
+        messages.removeAll()
+        messagesDictionary.removeAll()
+        tableView.reloadData()
+        
+        observeUserMessages()
         
         let titleView = UIView()
         titleView.frame = CGRect(x: 0, y: 0, width: 100, height: 40)
@@ -170,5 +210,30 @@ extension MessagesController {
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 72
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let message = messages[indexPath.row]
+        
+        guard let chatPartnerId = message.chatPartnerId() else {
+            return
+        }
+        
+        let ref = Database.database().reference().child("users").child(chatPartnerId)
+        ref.observeSingleEvent(of: .value, with: { (snapshot) in
+            print(snapshot)
+            guard let dic = snapshot.value as? [String: AnyObject] else {
+                return
+            }
+            
+            let user = User()
+            user.id = chatPartnerId
+            user.email = dic["email"] as? String
+            user.name = dic["name"] as? String
+            user.profileImageUrl = dic["profileImageUrl"] as? String
+            
+            self.showChatControllerForUser(user: user)
+        }, withCancel: nil)
+
     }
 }
