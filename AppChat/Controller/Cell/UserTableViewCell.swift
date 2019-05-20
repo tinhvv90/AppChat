@@ -7,9 +7,36 @@
 //
 
 import UIKit
+import Firebase
 
 class UserTableViewCell: UITableViewCell {
 
+    var message: Message? {
+        didSet {
+            if let toId = message?.toId {
+                let ref = Database.database().reference().child("users").child(toId)
+                ref.observeSingleEvent(of: .value, with: { (snapshot) in
+                    if let dic = snapshot.value as? [String: AnyObject] {
+                        self.textLabel?.text = dic["name"] as? String
+                        if let profileImageUrl = dic["profileImageUrl"] as? String {
+                            self.profileImageView.loadImageUsingCacheWithUrlString(urlString: profileImageUrl)
+                        }
+                    }
+                }, withCancel: nil)
+            }
+            
+            detailTextLabel?.text = message?.text
+            
+            if let seconds = message?.timestamp?.doubleValue {
+                let timestampdate = Date(timeIntervalSince1970: seconds)
+                
+                let dateFormater = DateFormatter()
+                dateFormater.dateFormat = "hh:mm:ss a"
+                timeLabel.text = dateFormater.string(from: timestampdate)
+            }
+        }
+    }
+    
     override func layoutSubviews() {
         super.layoutSubviews()
         textLabel?.frame = CGRect(x: 64, y: textLabel!.frame.origin.y - 2, width: textLabel!.frame.width, height: textLabel!.frame.height)
@@ -26,6 +53,14 @@ class UserTableViewCell: UITableViewCell {
         return imageView
     }()
     
+    let timeLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 13)
+        label.textColor = UIColor.lightGray
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -34,11 +69,16 @@ class UserTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
         addSubview(profileImageView)
-        
+        addSubview(timeLabel)
         profileImageView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 8).isActive = true
         profileImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
         profileImageView.widthAnchor.constraint(equalToConstant: 48).isActive = true
         profileImageView.heightAnchor.constraint(equalToConstant: 48).isActive = true
+        
+        timeLabel.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
+        timeLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 18).isActive = true
+        timeLabel.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        timeLabel.heightAnchor.constraint(equalTo: timeLabel.heightAnchor).isActive = true
     }
     
     required init?(coder aDecoder: NSCoder) {

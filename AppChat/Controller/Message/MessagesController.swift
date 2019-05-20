@@ -13,9 +13,38 @@ import FirebaseAuth
 
 class MessagesController: UITableViewController {
 
+    var messages = [Message]()
+    var messagesDictionary = [String: Message]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         checkIfUserIsLoggedIn()
+        tableView.register(UserTableViewCell.self, forCellReuseIdentifier: "UserTableViewCell")
+        observeMessages()
+    }
+    
+    func observeMessages() {
+        let ref = Database.database().reference().child("messages")
+        ref.observe(.childAdded, with: { (snapshot) in
+            if let dic = snapshot.value as? [String: AnyObject] {
+                let message = Message()
+                message.fromId = dic["fromId"] as? String
+                message.text = dic["text"] as? String
+                message.toId = dic["toId"] as? String
+                message.timestamp = dic["timestamp"] as? NSNumber
+                self.messages.append(message)
+                
+                if let toId = message.toId {
+                    self.messagesDictionary[toId] = message
+                    self.messages = Array(self.messagesDictionary.values)
+                    self.messages = self.messages.sorted(by: { $0.timestamp?.intValue ?? 0 < $1.timestamp?.intValue ?? 0 })
+                }
+                
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            }
+        }, withCancel: nil)
     }
     
     func checkIfUserIsLoggedIn() {
@@ -49,6 +78,7 @@ class MessagesController: UITableViewController {
         
         let titleView = UIView()
         titleView.frame = CGRect(x: 0, y: 0, width: 100, height: 40)
+//        titleView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showChatController)))
         
         let containerView = UIView()
         containerView.translatesAutoresizingMaskIntoConstraints = false
@@ -87,19 +117,13 @@ class MessagesController: UITableViewController {
         
         containerView.centerXAnchor.constraint(equalTo: titleView.centerXAnchor).isActive = true
         containerView.centerYAnchor.constraint(equalTo: titleView.centerYAnchor).isActive = true
-        
-        titleView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showChatController)))
     }
     
-    @objc func showChatController() {
-        print(123)
+    @objc func showChatControllerForUser(user: User) {
         
-        let chatVC = ChatlogController()
-        
-        
-//        let storyboard = UIStoryboard.init(name: "Chat", bundle: nil)
-//        let chatVC = storyboard.instantiateViewController(withIdentifier: "ChatlogController") as! ChatlogController
-//
+        let storyboard = UIStoryboard.init(name: "Chat", bundle: nil)
+        let chatVC = storyboard.instantiateViewController(withIdentifier: "ChatlogController") as! ChatlogController
+        chatVC.user = user
         self.navigationController?.pushViewController(chatVC, animated: true)
     }
     
@@ -110,6 +134,7 @@ class MessagesController: UITableViewController {
     @IBAction func newMessageAction(_ sender: UIBarButtonItem) {
         let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
         let newMessageController = storyboard.instantiateViewController(withIdentifier: "NewMessageController") as! NewMessageController
+        newMessageController.messagesController = self
         let nav = UINavigationController.init(rootViewController: newMessageController)
         present(nav, animated: true, completion: nil)
     }
@@ -129,3 +154,21 @@ class MessagesController: UITableViewController {
 
 }
 
+// UITableViewDelegate, UITableViewDataSource
+extension MessagesController {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return messages.count
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "UserTableViewCell", for: indexPath) as! UserTableViewCell
+        let message = messages[indexPath.row]
+        cell.message = message
+        return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 72
+    }
+}
