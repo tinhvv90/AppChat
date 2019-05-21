@@ -34,10 +34,15 @@
                                 <action selector="logoutAction:" destination="eq3-YW-Q8B" id="Ezf-8b-Las"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" image="icon_new_message" id="if5-Zw-uOB">
-                            <connections>
-                                <action selector="newMessageAction:" destination="eq3-YW-Q8B" id="ogN-zo-cN8"/>
-                            </connections>
+                        <barButtonItem key="rightBarButtonItem" style="plain" id="SGM-5G-FbE">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="eth-ZM-5iF">
+                                <rect key="frame" x="334" y="9.5" width="25" height="25"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="icon-add-message"/>
+                                <connections>
+                                    <action selector="newMessageAction:" destination="eq3-YW-Q8B" eventType="touchUpInside" id="cyi-IA-VwA"/>
+                                </connections>
+                            </button>
                         </barButtonItem>
                     </navigationItem>
                 </tableViewController>
@@ -239,6 +244,6 @@
     </scenes>
     <resources>
         <image name="avatar" width="443" height="443"/>
-        <image name="icon_new_message" width="25" height="25"/>
+        <image name="icon-add-message" width="25" height="25"/>
     </resources>
 </document>

@@ -166,14 +166,13 @@ class MessagesController: UITableViewController {
         handleLogout()
     }
     
-    @IBAction func newMessageAction(_ sender: UIBarButtonItem) {
+    @IBAction func newMessageAction(_ sender: UIButton) {
         let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
         let newMessageController = storyboard.instantiateViewController(withIdentifier: "NewMessageController") as! NewMessageController
         newMessageController.messagesController = self
         let nav = UINavigationController.init(rootViewController: newMessageController)
         present(nav, animated: true, completion: nil)
     }
-    
     
     @objc func handleLogout() {
         do {

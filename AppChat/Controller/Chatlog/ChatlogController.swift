@@ -51,14 +51,14 @@ class ChatlogController: UICollectionViewController {
         containerView.backgroundColor = .white
         
         let sendButton = UIButton(type: .system)
-        sendButton.setTitle("Send", for: .normal)
+        sendButton.setImage(UIImage(named: "icon_new_message"), for: .normal)
         sendButton.translatesAutoresizingMaskIntoConstraints = false
         sendButton.addTarget(self, action: #selector(handleSend), for: .touchUpInside)
         containerView.addSubview(sendButton)
         
         sendButton.rightAnchor.constraint(equalTo: containerView.rightAnchor).isActive = true
         sendButton.centerYAnchor.constraint(equalTo: containerView.centerYAnchor).isActive = true
-        sendButton.widthAnchor.constraint(equalToConstant: 80).isActive = true
+        sendButton.widthAnchor.constraint(equalToConstant: 50).isActive = true
         sendButton.heightAnchor.constraint(equalTo: containerView.heightAnchor).isActive = true
         
         containerView.addSubview(inputTextField)
@@ -123,7 +123,7 @@ class ChatlogController: UICollectionViewController {
     private func scrollToBottom() {
         let item = self.collectionView.numberOfItems(inSection: 0) - 1
         let lastItemIndex = IndexPath(item: item, section: 0)
-        self.collectionView.scrollToItem(at: lastItemIndex, at: UICollectionView.ScrollPosition.bottom, animated: false)
+        self.collectionView.scrollToItem(at: lastItemIndex, at: UICollectionView.ScrollPosition.bottom, animated: true)
     }
     
     // MARK: - Action
@@ -147,7 +147,7 @@ class ChatlogController: UICollectionViewController {
                 }
                 
                 self.inputTextField.text = nil
-                
+                self.scrollToBottom()
                 if let messageId = childRef.key {
                     let userMessagesRef = Database.database().reference().child("user-messages").child(fromId).child(toId)
                     userMessagesRef.updateChildValues([messageId: 1])
