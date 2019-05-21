@@ -89,11 +89,11 @@ class ChatlogController: UICollectionViewController {
     }
     
     func observeMessages() {
-        guard let uid = Auth.auth().currentUser?.uid else {
+        guard let uid = Auth.auth().currentUser?.uid , let toId = user?.id else {
             return
         }
         
-        let userMessagesRef = Database.database().reference().child("user-messages").child(uid)
+        let userMessagesRef = Database.database().reference().child("user-messages").child(uid).child(toId)
         userMessagesRef.observe(.childAdded, with: { (snapshot) in
             let messageId = snapshot.key
             let messagesRef = Database.database().reference().child("messages").child(messageId)
@@ -108,11 +108,10 @@ class ChatlogController: UICollectionViewController {
                 message.toId = dic["toId"] as? String
                 message.timestamp = dic["timestamp"] as? NSNumber
                 
-                if message.chatPartnerId() == self.user?.id {
-                    self.messages.append(message)
-                    DispatchQueue.main.async {
-                        self.collectionView.reloadData()
-                    }
+                // do we need to attempt filtering anymore
+                self.messages.append(message)
+                DispatchQueue.main.async {
+                    self.collectionView.reloadData()
                 }
                 
             }, withCancel: nil)
@@ -121,10 +120,10 @@ class ChatlogController: UICollectionViewController {
         
     }
     
+    // MARK: - Action
     @objc func handleSend() {
         let ref = Database.database().reference().child("messages")
-        if let inputText = inputTextField.text {
-            
+        if let inputText = inputTextField.text, inputText != "" {
             let childRef = ref.childByAutoId()
             
             let fromId = Auth.auth().currentUser!.uid
@@ -144,10 +143,10 @@ class ChatlogController: UICollectionViewController {
                 self.inputTextField.text = nil
                 
                 if let messageId = childRef.key {
-                    let userMessagesRef = Database.database().reference().child("user-messages").child(fromId)
+                    let userMessagesRef = Database.database().reference().child("user-messages").child(fromId).child(toId)
                     userMessagesRef.updateChildValues([messageId: 1])
                     
-                    let recipientUserMessagesRef = Database.database().reference().child("user-messages").child(toId)
+                    let recipientUserMessagesRef = Database.database().reference().child("user-messages").child(toId).child(fromId)
                     recipientUserMessagesRef.updateChildValues([messageId: 1])
                 }
             }
