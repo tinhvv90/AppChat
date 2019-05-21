@@ -111,13 +111,19 @@ class ChatlogController: UICollectionViewController {
                 // do we need to attempt filtering anymore
                 self.messages.append(message)
                 DispatchQueue.main.async {
+                    self.scrollToBottom()
                     self.collectionView.reloadData()
                 }
                 
             }, withCancel: nil)
             
         }, withCancel: nil)
-        
+    }
+    
+    private func scrollToBottom() {
+        let item = self.collectionView.numberOfItems(inSection: 0) - 1
+        let lastItemIndex = IndexPath(item: item, section: 0)
+        self.collectionView.scrollToItem(at: lastItemIndex, at: UICollectionView.ScrollPosition.bottom, animated: false)
     }
     
     // MARK: - Action
