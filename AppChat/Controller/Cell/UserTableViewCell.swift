@@ -94,12 +94,4 @@ class UserTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        message = nil
-        timeLabel.text = nil
-        detailTextLabel?.text = nil
-        profileImageView.image = nil
-    }
 }

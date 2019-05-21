@@ -165,11 +165,36 @@ extension ChatlogController : UICollectionViewDelegateFlowLayout {
         let message = messages[indexPath.item]
         cell.textView.text = message.text
         
+        setupCell(cell: cell, message: message)
+        
         // change with bubbleWith
         if let text = message.text {
             cell.bubbleWithAnchor?.constant = estimateFrameForText(text: text).width + 32
         }
         return cell
+    }
+    
+    private func setupCell(cell: ChatMessageViewCell, message: Message)  {
+        
+        if let profileImageUrl = self.user?.profileImageUrl {
+            cell.profileImageView.loadImageUsingCacheWithUrlString(urlString: profileImageUrl)
+        }
+        
+        if message.fromId == Auth.auth().currentUser?.uid {
+            // outgoing blue
+            cell.bubbleView.backgroundColor = UIColor.blueColor
+            cell.textView.textColor = .white
+            cell.profileImageView.isHidden = true
+            cell.bubbleViewRightAnchor?.isActive = true
+            cell.bubbleViewLeftAnchor?.isActive = false
+        } else {
+            // incoming gray
+            cell.bubbleView.backgroundColor = UIColor(r: 240, g: 240, b: 240)
+            cell.textView.textColor = .black
+            cell.profileImageView.isHidden = false
+            cell.bubbleViewRightAnchor?.isActive = false
+            cell.bubbleViewLeftAnchor?.isActive = true
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

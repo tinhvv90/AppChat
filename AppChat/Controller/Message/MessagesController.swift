@@ -16,11 +16,12 @@ class MessagesController: UITableViewController {
     var messages = [Message]()
     var messagesDictionary = [String: Message]()
     
+    var timer: Timer?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         checkIfUserIsLoggedIn()
         tableView.register(UserTableViewCell.self, forCellReuseIdentifier: "UserTableViewCell")
-//        observeMessages()
     }
     
     func observeUserMessages() {
@@ -46,39 +47,20 @@ class MessagesController: UITableViewController {
                     if let chatPartnerId = message.chatPartnerId() {
                         self.messagesDictionary[chatPartnerId] = message
                         self.messages = Array(self.messagesDictionary.values)
-                        self.messages = self.messages.sorted(by: { $0.timestamp?.intValue ?? 0 < $1.timestamp?.intValue ?? 0 })
+                        self.messages = self.messages.sorted(by: { $0.timestamp?.intValue ?? 0 > $1.timestamp?.intValue ?? 0 })
                     }
-                    
-                    DispatchQueue.main.async {
-                        self.tableView.reloadData()
-                    }
+                    self.timer?.invalidate()
+                    self.timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.handleReloadTable), userInfo: nil, repeats: false)
                 }
             }, withCancel: nil)
         }, withCancel: nil)
     }
     
-    func observeMessages() {
-        let ref = Database.database().reference().child("messages")
-        ref.observe(.childAdded, with: { (snapshot) in
-            if let dic = snapshot.value as? [String: AnyObject] {
-                let message = Message()
-                message.fromId = dic["fromId"] as? String
-                message.text = dic["text"] as? String
-                message.toId = dic["toId"] as? String
-                message.timestamp = dic["timestamp"] as? NSNumber
-                self.messages.append(message)
-                
-                if let toId = message.toId {
-                    self.messagesDictionary[toId] = message
-                    self.messages = Array(self.messagesDictionary.values)
-                    self.messages = self.messages.sorted(by: { $0.timestamp?.intValue ?? 0 < $1.timestamp?.intValue ?? 0 })
-                }
-                
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                }
-            }
-        }, withCancel: nil)
+    @objc private func handleReloadTable() {
+        DispatchQueue.main.async {
+            print("----------reload ------------------")
+            self.tableView.reloadData()
+        }
     }
     
     func checkIfUserIsLoggedIn() {
@@ -118,7 +100,6 @@ class MessagesController: UITableViewController {
         
         let titleView = UIView()
         titleView.frame = CGRect(x: 0, y: 0, width: 100, height: 40)
-//        titleView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showChatController)))
         
         let containerView = UIView()
         containerView.translatesAutoresizingMaskIntoConstraints = false
