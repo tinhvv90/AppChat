@@ -9,7 +9,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Chatlog Controller-->
+        <!-- -->
         <scene sceneID="aSp-Ku-h8N">
             <objects>
                 <collectionViewController storyboardIdentifier="ChatlogController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="IGu-TW-04l" customClass="ChatlogController" customModule="AppChat" customModuleProvider="target" sceneMemberID="viewController">
@@ -38,7 +38,7 @@
                             <outlet property="delegate" destination="IGu-TW-04l" id="RPg-mD-dJn"/>
                         </connections>
                     </collectionView>
-                    <navigationItem key="navigationItem" id="b75-TI-n50"/>
+                    <navigationItem key="navigationItem" title=" " id="b75-TI-n50"/>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gl2-y1-2q4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
