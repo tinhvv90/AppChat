@@ -94,7 +94,8 @@ class LoginController: UIViewController {
                             guard let url = url?.absoluteString else {
                                 return
                             }
-                            let values = ["name": name, "email": email, "profileImageUrl": url]
+                            
+                            let values = ["uid": user.uid , "name": name, "email": email, "profileImageUrl": url]
                             self.registerUserIntoDatabaseWithUID(uid: user.uid, values: values as [String : AnyObject] )
                         })
                     })
@@ -111,8 +112,8 @@ class LoginController: UIViewController {
                 return
             }
             
-//            self.messagesController?.fetchUserAndSetupNavTitle()
             let user = User()
+            user.id = values["uid"] as? String
             user.name = values["name"] as? String
             user.email = values["email"] as? String
             user.profileImageUrl = values["profileImageUrl"] as? String

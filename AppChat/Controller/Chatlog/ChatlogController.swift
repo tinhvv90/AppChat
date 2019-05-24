@@ -50,6 +50,18 @@ class ChatlogController: UICollectionViewController {
         containerView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 50)
         containerView.backgroundColor = .white
         
+        let uploadImageView = UIImageView()
+        uploadImageView.image = UIImage(named: "upload-new-image")
+        uploadImageView.isUserInteractionEnabled = true
+        uploadImageView.translatesAutoresizingMaskIntoConstraints = false
+        uploadImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleUploadTap)))
+        containerView.addSubview(uploadImageView)
+        
+        uploadImageView.leftAnchor.constraint(equalTo: containerView.leftAnchor,constant: 4).isActive = true
+        uploadImageView.centerYAnchor.constraint(equalTo: containerView.centerYAnchor).isActive = true
+        uploadImageView.widthAnchor.constraint(equalToConstant: 35).isActive = true
+        uploadImageView.heightAnchor.constraint(equalToConstant: 35).isActive = true
+        
         let sendButton = UIButton(type: .system)
         sendButton.setImage(UIImage(named: "icon_new_message"), for: .normal)
         sendButton.translatesAutoresizingMaskIntoConstraints = false
@@ -63,7 +75,7 @@ class ChatlogController: UICollectionViewController {
         
         containerView.addSubview(inputTextField)
         
-        inputTextField.leftAnchor.constraint(equalTo: containerView.leftAnchor, constant: 8).isActive = true
+        inputTextField.leftAnchor.constraint(equalTo: uploadImageView.rightAnchor, constant: 8).isActive = true
         inputTextField.centerYAnchor.constraint(equalTo: containerView.centerYAnchor).isActive = true
         inputTextField.rightAnchor.constraint(equalTo: sendButton.leftAnchor).isActive = true
         inputTextField.heightAnchor.constraint(equalTo: containerView.heightAnchor).isActive = true
@@ -86,6 +98,13 @@ class ChatlogController: UICollectionViewController {
     
     override var canBecomeFirstResponder: Bool {
         return true
+    }
+    
+    @objc private func handleUploadTap () {
+        let picker = UIImagePickerController()
+        picker.delegate = self
+        picker.allowsEditing = true
+        present(picker, animated: true, completion: nil)
     }
     
     func observeMessages() {
@@ -228,5 +247,34 @@ extension ChatlogController : UICollectionViewDelegateFlowLayout {
         let size = CGSize(width: 200, height: 1000)
         let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
         return NSString(string: text).boundingRect(with: size, options: options, attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16)], context: nil)
+    }
+}
+
+//MARK:- UIImagePickerControllerDelegate, UINavigationControllerDelegate
+extension ChatlogController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        var selectedImageFromPicker: UIImage?
+        
+        if let editedImage = info[.editedImage] as? UIImage {
+            selectedImageFromPicker = editedImage
+            print(editedImage.size)
+        } else if let originalImage = info[.originalImage] as? UIImage {
+            selectedImageFromPicker = originalImage
+            print(originalImage.size)
+        }
+        
+        if let selectedImage = selectedImageFromPicker {
+            uploadToFirebaseStoreUsingImage(image: selectedImage)
+        }
+        
+        dismiss(animated: true, completion: nil)
+    }
+    
+    private func uploadToFirebaseStoreUsingImage(image: UIImage) {
+        print("upload to FIREBASE... !")
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        self.dismiss(animated: true, completion: nil)
     }
 }
